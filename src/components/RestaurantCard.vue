@@ -1,25 +1,28 @@
 <template>
   <div class="restaurant-card" @click="$emit('select', restaurant)">
     <div class="image-container">
-      <!-- <img :src="`http://localhost:3002/${restaurant.image}` || '../assets/placeholder.jpg'" :alt="restaurant.name" class="restaurant-image"> -->
-      <img src="../assets/placeholder.jpg" :alt="restaurant.name" class="restaurant-image">
+      <img v-if="restaurant.id == 2" src="../assets/burger.webp" :alt="restaurant.name" class="restaurant-image">
+      <img v-if="restaurant.id == 1" src="../assets/burger2.jpg" :alt="restaurant.name" class="restaurant-image">
+      <!-- <img src="../assets/placeholder.jpg" :alt="restaurant.name" class="restaurant-image"> -->
     </div>
     <div class="details">
       <!-- <h3 class="name">{{ restaurant.name }}</h3> -->
+
       <div class="info">
         <h3 class="name">{{ restaurant.name }}</h3>
         <!-- <span class="cuisine">{{ restaurant.cuisine }}</span> -->
         <!-- <span class="rating">⭐ {{ restaurant.rating }}</span> -->
-        <span class="rating"> <font-awesome-icon :icon="['fas', 'star']" /> {{ restaurant.rating || '4.8'}}</span>
+        <span class="rating"> <font-awesome-icon :icon="['fas', 'star']" /> {{ restaurant.rating || '4.8' }}</span>
       </div>
       <div class="delivery-time"> <font-awesome-icon class="search-icon" :icon="['fas', 'car']" />
-        {{ restaurant.deliveryTime || '40-50 min'}}</div>
+        {{ restaurant.deliveryTime || '40-50 min' }}</div>
       <span class="bonus">Yetkazib berish tekin</span>
     </div>
   </div>
 </template>
 
 <script>
+
 // import { faStar } from '@fortawesome/free-regular-svg-icons/faStar'
 export default {
   props: {

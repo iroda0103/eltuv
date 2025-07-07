@@ -88,7 +88,7 @@
       </div>
 
       <div class="payment-options">
-        <button :class="{ 'payment-option': true, 'selected': paymentMethod === 'card' }"
+        <button :class="{ 'payment-option': true, 'selected': paymentMethod === 'card' }" disabled
           @click="paymentMethod = 'card'">
           <span class="payment-icon">💳</span>
           <span class="payment-text">Karta orqali to'lash</span>
@@ -164,6 +164,8 @@ const changeDeliveryType = (type) => {
     deliveryPrice.value = 10000
   }
 }
+console.log(orderStore);
+
 
 const order = async () => {
   // Bu yerda buyurtma berish jarayonini amalga oshirish mumkin
@@ -177,19 +179,19 @@ const order = async () => {
   //   })),
   //   deliveryFree: deliveryPrice.value
   // })
-  await orderStore.createOrderToDelivery({
-    address: userStore.user?.address,
-    driverId: 9,
-    clientId: userStore.user.id,
-    restaurantId: menuStore.restaurant?.id,
-    items: menuStore.menu.map(item => ({
-      menuId: item.id,
-      quantity: item.quantity
-    })),
+  // await orderStore.createOrderToDelivery({
+  //   address: userStore.user?.address,
+  //   driverId: 9,
+  //   clientId: userStore.user.id,
+  //   restaurantId: menuStore.restaurant?.id,
+  //   items: menuStore.menu.map(item => ({
+  //     menuId: item.id,
+  //     quantity: item.quantity
+  //   })),
     // paymentMethod: paymentMethod.value,
     // totalPrice: menuStore.totalPrice + deliveryPrice.value,
     // deliveryFree: deliveryPrice.value
-  })
+  // })
   window.Telegram.WebApp.close() // Telegram WebApp ni yopish
   // Redirect to order confirmation page or show success message
   console.log('Buyurtma muvaffaqiyatli yaratildi!')

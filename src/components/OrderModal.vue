@@ -29,10 +29,10 @@
 
                 <hr class="divider" />
 
-                <div class="summary">
+                <!-- <div class="summary">
                     <p>Service fee: <strong>5,000 sum</strong></p>
                     <p>Delivery: <strong>4,999 sum</strong></p>
-                </div>
+                </div> -->
 
                 <button class="checkout-btn" @click="$emit('clear-menu')"> 
                     Next {{ formatPrice(totalPrice + 9999) }} sum

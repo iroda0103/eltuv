@@ -127,7 +127,8 @@ export default {
   <div class="menu-item">
     <div class="menu-item__wrapper" @click="openBottomSheet">
       <div class="item-image">
-        <img src="../assets/food.jpeg" alt="Food item" />
+        <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" />
+        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" />
       </div>
       <div class="item-info">
         <h3 class="item-name">{{ item.name }}</h3>
@@ -149,7 +150,8 @@ export default {
         </div>
         <div class="bottom-sheet__content">
           <div class="modal-image">
-            <img src="../assets/food.jpeg" alt="Food item" />
+            <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" />
+            <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" />
           </div>
           <!-- <div class="modal-info">
             <h2>{{ item.name }}</h2>

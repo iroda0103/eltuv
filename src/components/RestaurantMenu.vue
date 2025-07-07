@@ -48,7 +48,7 @@
       </div> -->
 
       <div>
-        <h3 class="category-title">Milliy ovqatlar</h3>
+        <h3 class="category-title">Burgerlar</h3>
         <div class="menu-container">
           <ProductInfo v-for="item in menu" :key="item.id" :item="item" @add-to-menu="addToMenu"
             @remove-from-menu="removeFromMenu" @clear-menu="clearMenu" :quantity="getQuantity(item.id)" />
@@ -250,17 +250,17 @@ export default {
 
 .order-button {
   background: yellow;
-  /* position: fixed;
+  position: fixed;
   bottom: 20px;
-  left: 20px; */
-  /* width: calc(100% - 40px); */
+  left: 20px;
+  right: 20px;
+  width: calc(100% - 40px);
   padding: 15px;
   text-align: center;
   border-radius: 15px;
   font-weight: bold;
   cursor: pointer;
 
-  width: 100%;
   background: #FFA500;
   color: #222;
   border: none;

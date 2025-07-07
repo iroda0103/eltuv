@@ -25,7 +25,9 @@
 
             <div v-else>
                 <div v-for="item in items" :key="item.id" class="modal-item">
-                    <div class="modal-item__wrapper"><img src="../assets/food.jpeg" alt="item" class="menu-img" />
+                    <div class="modal-item__wrapper">
+                        <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="item" class="menu-img" />
+                        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="item" class="menu-img" />
                         <div class="modal-menu--info">
                             <p class="item-name">{{ item.name }}</p>
                             <p class="item-meta">{{ formatPrice(item.price) }} sum </p>
@@ -40,12 +42,13 @@
                     </div>
                 </div>
 
-                <!-- <hr class="divider" /> -->
+                <hr class="divider" />
 
-                <div class="summary">
+                <!-- <div class="summary">
                     <p>Service fee: <strong>5,000 sum</strong></p>
                     <p>Delivery: <strong>4,999 sum</strong></p>
-                </div>
+                </div> -->
+                
 
                 <button class="checkout-btn" @click="next">
                     Next {{ formatPrice(totalPrice + 9999) }} sum
