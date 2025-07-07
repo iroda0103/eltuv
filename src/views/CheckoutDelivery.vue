@@ -167,7 +167,7 @@ const changeDeliveryType = (type) => {
 console.log(orderStore);
 
 
-// const order = async () => {
+const order = async () => {
   // Bu yerda buyurtma berish jarayonini amalga oshirish mumkin
   // console.log('Buyurtma berildi:', {
   //   address: address.value,
@@ -206,7 +206,7 @@ console.log(orderStore);
   // Redirect to order confirmation page or show success message
   console.log('Buyurtma muvaffaqiyatli yaratildi!')
 
-// }
+}
 </script>
 
 <style scoped>
