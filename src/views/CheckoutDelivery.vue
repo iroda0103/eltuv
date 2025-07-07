@@ -188,10 +188,20 @@ const order = async () => {
   //     menuId: item.id,
   //     quantity: item.quantity
   //   })),
-    // paymentMethod: paymentMethod.value,
-    // totalPrice: menuStore.totalPrice + deliveryPrice.value,
-    // deliveryFree: deliveryPrice.value
+  // paymentMethod: paymentMethod.value,
+  // totalPrice: menuStore.totalPrice + deliveryPrice.value,
+  // deliveryFree: deliveryPrice.value
   // })
+  window.Telegram.WebApp.sendData(JSON.stringify({
+    address: address.value,
+    paymentMethod: paymentMethod.value,
+    totalPrice: menuStore.totalPrice + deliveryPrice.value,
+    items: menuStore.menu.map(item => ({
+      productId: item.id,
+      quantity: item.quantity
+    })),
+    deliveryFree: deliveryPrice.value
+  }))
   window.Telegram.WebApp.close() // Telegram WebApp ni yopish
   // Redirect to order confirmation page or show success message
   console.log('Buyurtma muvaffaqiyatli yaratildi!')
