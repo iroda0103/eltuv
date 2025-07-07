@@ -198,7 +198,9 @@ const order = async () => {
     totalPrice: menuStore.totalPrice + deliveryPrice.value,
     items: menuStore.menu.map(item => ({
       productId: item.id,
-      quantity: item.quantity
+      quantity: item.quantity,
+      name: item.name,
+      price: item.price
     })),
     deliveryFree: deliveryPrice.value,
     user: {
