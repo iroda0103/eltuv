@@ -200,7 +200,13 @@ const order = async () => {
       productId: item.id,
       quantity: item.quantity
     })),
-    deliveryFree: deliveryPrice.value
+    deliveryFree: deliveryPrice.value,
+    user: {
+      id: userStore.user.id,
+      name: userStore.user.name,
+      phone: userStore.user.phone,
+      address: userStore.user.address
+    }
   }))
   window.Telegram.WebApp.close() // Telegram WebApp ni yopish
   // Redirect to order confirmation page or show success message
