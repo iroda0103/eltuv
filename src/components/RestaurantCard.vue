@@ -1,39 +1,49 @@
 <template>
   <div class="restaurant-card" @click="$emit('select', restaurant)">
     <div class="image-container">
-      <!-- <img :src="restaurant.image || '../assets/placeholder.jpg'" :alt="restaurant.name" class="restaurant-image"> -->
+      <!-- <img :src="`http://localhost:3002/${restaurant.image}` || '../assets/placeholder.jpg'" :alt="restaurant.name" class="restaurant-image"> -->
       <img src="../assets/placeholder.jpg" :alt="restaurant.name" class="restaurant-image">
     </div>
     <div class="details">
-      <h3 class="name">{{ restaurant.name }}</h3>
+      <!-- <h3 class="name">{{ restaurant.name }}</h3> -->
       <div class="info">
-        <span class="cuisine">{{ restaurant.cuisine }}</span>
-        <span class="rating">⭐ {{ restaurant.rating }}</span>
+        <h3 class="name">{{ restaurant.name }}</h3>
+        <!-- <span class="cuisine">{{ restaurant.cuisine }}</span> -->
+        <!-- <span class="rating">⭐ {{ restaurant.rating }}</span> -->
+        <span class="rating"> <font-awesome-icon :icon="['fas', 'star']" /> {{ restaurant.rating || '4.8'}}</span>
       </div>
-      <div class="delivery-time">{{ restaurant.deliveryTime }}</div>
+      <div class="delivery-time"> <font-awesome-icon class="search-icon" :icon="['fas', 'car']" />
+        {{ restaurant.deliveryTime || '40-50 min'}}</div>
+      <span class="bonus">Yetkazib berish tekin</span>
     </div>
   </div>
 </template>
 
 <script>
+// import { faStar } from '@fortawesome/free-regular-svg-icons/faStar'
 export default {
   props: {
-      restaurant: {
-    type: Object,
-    required: true
-  }
-  }
+    restaurant: {
+      type: Object,
+      required: true
+    }
+  },
+
+
 }
 </script>
 
 <style scoped>
 .restaurant-card {
+  flex: 0 0 auto;
   border-radius: 12px;
   background: white;
   overflow: hidden;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  scroll-snap-align: 20px;
+  width: 270px;
 }
 
 .image-container {
@@ -58,26 +68,40 @@ export default {
 .info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   color: #666;
   font-size: 0.9rem;
 }
 
 .delivery-time {
-  color: #2ecc71;
-  font-weight: 500;
+  /* color: #2ecc71;
+  font-weight: 500; */
+  font-size: 14px;
+  color: var(--text-primary);
 }
 
 .restaurant-card {
   background: var(--card-bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .name {
   color: var(--text-primary);
 }
 
-.cuisine, .rating {
-  color: var(--text-secondary);
+.cuisine,
+.rating {
+  color: var(--text-primary);
+}
+
+.bonus {
+  font-size: 12px;
+  color: rgba(61, 174, 27, 0.95);
+  background-color: rgba(166, 251, 166, 0.88);
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin-top: 5px;
+  display: inline-block;
+  font-weight: bold;
 }
 </style>
