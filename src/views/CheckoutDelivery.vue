@@ -310,6 +310,7 @@ const order = async () => {
         price: item.price
       })),
       deliveryFree: deliveryPrice.value,
+      deliveryType: order.delivery_type,
       user: {
         id: userStore.user.id,
         name: userStore.user.name,
