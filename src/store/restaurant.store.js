@@ -17,7 +17,7 @@ export const useRestaurantStore = defineStore('restaurant', {
       this.loading = true
       try {
         const response = await RestaurantRepository.get()
-        const category_restaurant=await RestaurantRepository.getCategory()
+        const category_restaurant=await RestaurantRepository.getCategory('cityFilter=1')
         // this.restaurants = [{ id: 1, category: 'Burger', restaurants: response.data.data }]
         this.restaurants = response.data.data
         this.categoryRestaurants=category_restaurant.data.data
@@ -84,8 +84,9 @@ export const useRestaurantStore = defineStore('restaurant', {
         if (query.q) {
           queryString = `search=${query.q}`
         }
+
         if (query.cityFilter) {
-          queryString += `&cityFilter=${query.cityFilter}`
+          queryString += `&cityFilter=${query.cityFilter?query.cityFilter:1}`
         }
         const response = await RestaurantRepository.searchRestaurant(queryString)
         const category_restaurant = await RestaurantRepository.getCategory(queryString)
