@@ -269,8 +269,8 @@ const order = async () => {
         message: "Buyurtma berish uchun manzilni kiritishingiz shart!",
         buttons: [{
           type: "default",
-          text: "Manzilni kiritish",
-          id: "set_address"
+          text: "Ok",
+          // id: "set_address"
         }, {
           type: "cancel",
           text: "Bekor qilish"
