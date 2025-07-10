@@ -15,7 +15,7 @@
             </div>
         </div> -->
         
-        <div class="section" v-for="category in restaurantStore.categoryRestaurants.reverse()" :key="`category_${category.categoryName}`">
+        <div class="section" v-for="category in restaurantStore.categoryRestaurants" :key="`category_${category.categoryName}`">
             <h2 class="section-title">{{ category.category || ''}}</h2>
             <div v-if="category.restaurants.length" class="restaurant-wrapper">
                 <router-link v-for="restaurant in category.restaurants" :key="restaurant.id"
