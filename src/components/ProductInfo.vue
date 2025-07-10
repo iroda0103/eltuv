@@ -127,8 +127,9 @@ export default {
   <div class="menu-item">
     <div class="menu-item__wrapper" @click="openBottomSheet">
       <div class="item-image">
-        <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" />
-        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" />
+        <img :src="`https://api.suvtekin.uz/${item.image}`" alt="Food item" />
+        <!-- <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" />
+        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" /> -->
       </div>
       <div class="item-info">
         <h3 class="item-name">{{ item.name }}</h3>

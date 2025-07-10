@@ -5,8 +5,8 @@ export default {
   get() {
     return Client.get(`${resource}`);
   },
-  getCategory(){
-    return Client.get(`${resource}/category/group`)
+  getCategory(query){
+    return Client.get(`${resource}/category/group/?${query}`)
   },
   getRestaurant(id) {
     return Client.get(`${resource}/${id}`);

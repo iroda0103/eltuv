@@ -88,7 +88,9 @@ export const useRestaurantStore = defineStore('restaurant', {
           queryString += `&cityFilter=${query.cityFilter}`
         }
         const response = await RestaurantRepository.searchRestaurant(queryString)
+        const category_restaurant = await RestaurantRepository.getCategory(queryString)
         this.restaurants = response.data.data
+        this.categoryRestaurants = category_restaurant.data.data
       } catch (error) {
         this.error = error
       } finally {

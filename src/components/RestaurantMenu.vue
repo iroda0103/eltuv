@@ -217,8 +217,11 @@ export default {
 
 .menu-container {
   display: grid;
-  grid: auto / auto auto;
+ /* grid: auto / auto auto;
+  gap: 16px;*/
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 16px;
+  width: 100%;
 }
 
 .restaurant__name {
