@@ -12,7 +12,7 @@
             <span class="option-title">Yetkazib berish</span>
             <span class="option-duration">25-35 daqiqa</span>
           </div>
-          <span class="option-price">10,000 so'm</span>
+          <span class="option-price">{{ deliveryPrice }} so'm</span>
         </div>
         <div :class="'option ' + (!isDelivery ? 'selected' : '')" @click="changeDeliveryType('pickup')">
           <div class="option-content">
@@ -120,7 +120,7 @@
   </div>
 </template>
 
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue'
 import { useMenuStore } from '../store/menu.store'
 import { useUserStore } from '../store/user.store'
@@ -138,7 +138,7 @@ const address = ref({
 
 
 const paymentMethod = ref('cash')
-const deliveryPrice = ref(10000)
+const deliveryPrice = ref(0)
 const isDelivery = ref(true)
 const menuStore = useMenuStore()
 const userStore = useUserStore()
@@ -156,7 +156,8 @@ const changeDeliveryType = (type) => {
   if (type === 'pickup') {
     deliveryPrice.value = 0
   } else {
-    deliveryPrice.value = 10000
+    // deliveryPrice.value = 10000
+    deliveryPrice.value = 0
   }
 }
 console.log(orderStore);
@@ -164,9 +165,128 @@ console.log(orderStore);
 
 const order = async () => {
   try {
+    if (userStore.user.address) {
+      const order = await orderStore.createOrder({
+        address: userStore.user?.address,
+        driverId: 9,
+        clientId: userStore.user.id,
+        restaurantId: menuStore.restaurant?.id,
+        items: menuStore.menu.map(item => ({
+          menuId: item.id,
+          quantity: item.quantity
+        })),
+        paymentMethod: paymentMethod.value,
+        deliveryMethod: isDelivery.value ? 'delivery' : 'pickup'
+      })
+
+      window.Telegram.WebApp.sendData(JSON.stringify({
+        id: order.id,
+        address: address.value,
+        paymentMethod: paymentMethod.value,
+        totalPrice: menuStore.totalPrice + deliveryPrice.value,
+        items: menuStore.menu.map(item => ({
+          productId: item.id,
+          quantity: item.quantity,
+          name: item.name,
+          price: item.price
+        })),
+        deliveryFree: deliveryPrice.value,
+        user: {
+          id: userStore.user.id,
+          name: userStore.user.name,
+          phone: userStore.user.phone,
+          address: userStore.user.address
+        }
+      }))
+    }
+    else {
+      console.log('Manzilni kiriting');
+
+    }
+  } catch (error) {
+    console.log('Nimadir xato ketdi', error)
+  }
+
+  window.Telegram.WebApp.close()
+  console.log('Buyurtma muvaffaqiyatli yaratildi!')
+
+}
+</script> -->
+<script setup>
+import { ref, computed } from 'vue'
+import { useMenuStore } from '../store/menu.store'
+import { useUserStore } from '../store/user.store'
+import { useOrderStore } from '../store/order.store'
+
+// Manzil ma'lumotlari
+const address = ref({
+  full: 'Gulobod dahasi, uy 97',
+  entrance: '3',
+  domofon: '',
+  flat: '23',
+  floor: '2',
+  note: '',
+  phone: '+998881113821',
+})
+
+// Store'lar
+const menuStore = useMenuStore()
+const userStore = useUserStore()
+const orderStore = useOrderStore()
+
+// To'lov va yetkazib berish
+const paymentMethod = ref('cash')
+const deliveryPrice = ref(0)
+const isDelivery = ref(true)
+
+// Foydalanuvchi telefon raqamini sozlash
+if (userStore.user?.phone) {
+  address.value.phone = '+998' + userStore.user.phone
+}
+
+// Narxlarni formatlash
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('ru-RU').format(price)
+}
+
+// Yetkazib berish turini o'zgartirish
+const changeDeliveryType = (type) => {
+  isDelivery.value = (type === 'delivery')
+  deliveryPrice.value = type === 'pickup' ? 0 : 0 // Kelajakda yetkazib berish narxini o'zgartirish mumkin
+}
+
+// Umumiy narxni hisoblash
+const totalPrice = computed(() => {
+  return menuStore.totalPrice + deliveryPrice.value
+})
+
+// Buyurtma berish
+const order = async () => {
+  try {
+    if (!userStore.user?.address) {
+      window.Telegram.WebApp.showPopup({
+        title: "Manzil kiritilmadi",
+        message: "Buyurtma berish uchun manzilni kiritishingiz shart!",
+        buttons: [{
+          type: "default",
+          text: "Manzilni kiritish",
+          id: "set_address"
+        }, {
+          type: "cancel",
+          text: "Bekor qilish"
+        }]
+      }, (buttonId) => {
+        if (buttonId === "set_address") {
+          // Manzilni sozlash logikasi
+          window.Telegram.WebApp.openTelegramLink("https://t.me/yourbot?start=set_address");
+        }
+      });
+      return;
+    }
+    // Buyurtma yaratish
     const order = await orderStore.createOrder({
-      address: userStore.user?.address,
-      driverId: 9,
+      address: userStore.user.address,
+      driverId: 9, // Bu hardcoded qiymat, o'zgartirish kerak
       clientId: userStore.user.id,
       restaurantId: menuStore.restaurant?.id,
       items: menuStore.menu.map(item => ({
@@ -176,12 +296,13 @@ const order = async () => {
       paymentMethod: paymentMethod.value,
       deliveryMethod: isDelivery.value ? 'delivery' : 'pickup'
     })
-    
+
+    // Telegram WebApp ga ma'lumot yuborish
     window.Telegram.WebApp.sendData(JSON.stringify({
       id: order.id,
       address: address.value,
       paymentMethod: paymentMethod.value,
-      totalPrice: menuStore.totalPrice + deliveryPrice.value,
+      totalPrice: totalPrice.value,
       items: menuStore.menu.map(item => ({
         productId: item.id,
         quantity: item.quantity,
@@ -196,16 +317,17 @@ const order = async () => {
         address: userStore.user.address
       }
     }))
+
+    // Telegram WebApp ni yopish
+    window.Telegram.WebApp.close()
+    console.log('Buyurtma muvaffaqiyatli yaratildi!', order)
+
   } catch (error) {
-    console.log('Nimadir xato ketdi', error)
+    console.error('Buyurtma yaratishda xatolik:', error)
+    // Bu yerda foydalanuvchiga xato haqida xabar ko'rsatish kerak
   }
-
-  window.Telegram.WebApp.close()
-  console.log('Buyurtma muvaffaqiyatli yaratildi!')
-
 }
 </script>
-
 <style scoped>
 .checkout-container {
   max-width: 600px;

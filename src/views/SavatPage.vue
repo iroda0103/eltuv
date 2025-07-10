@@ -26,8 +26,9 @@
             <div v-else>
                 <div v-for="item in items" :key="item.id" class="modal-item">
                     <div class="modal-item__wrapper">
-                        <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="item" class="menu-img" />
-                        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="item" class="menu-img" />
+                        <!-- <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="item" class="menu-img" />
+                        <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="item" class="menu-img" /> -->
+                        <img :src="`https://api.suvtekin.uz/${item.image}`" alt="Food item" class="menu-img" />
                         <div class="modal-menu--info">
                             <p class="item-name">{{ item.name }}</p>
                             <p class="item-meta">{{ formatPrice(item.price) }} sum </p>
