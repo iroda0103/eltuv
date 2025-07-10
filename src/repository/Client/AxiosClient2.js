@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseDomain = "http://localhost:3030/";
+// const baseDomain = "http://localhost:3030/";
+const baseDomain = "https://api.suvtekin.uz/";
+
 const baseURL = `${baseDomain}`; 
 
 const Client = axios.create({

@@ -6,7 +6,7 @@ const baseDomain = "https://api.suvtekin.uz/";
 const baseURL = `${baseDomain}`; 
 
 const Client = axios.create({
-  baseURL,
+  baseURL, 
   headers: {
     "Content-Type": "application/json"
   }
