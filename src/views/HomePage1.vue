@@ -43,7 +43,7 @@ const restaurantsData = [
     locationId: 1,
     cuisine: "Uzbek, Asian",
     rating: 4.7,
-    deliveryTime: "30-40 min",
+    deliveryTime: "20-30 min",
     image: "osh.jpg",
     menu: [
       { id: 101, name: "Osh", price: 25000, description: "Traditional Uzbek Plov" },
@@ -69,7 +69,7 @@ const restaurantsData = [
     locationId: 2,
     cuisine: "Japanese",
     rating: 4.8,
-    deliveryTime: "40-50 min",
+    deliveryTime: "20-30 min",
     image: "sushi.jpg",
     menu: [
       { id: 301, name: "California Roll", price: 32000, description: "Crab, avocado, cucumber" },

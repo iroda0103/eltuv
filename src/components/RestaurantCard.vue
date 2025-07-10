@@ -1,8 +1,9 @@
 <template>
   <div class="restaurant-card" @click="$emit('select', restaurant)">
     <div class="image-container">
-      <img v-if="restaurant.id == 2" src="../assets/burger.webp" :alt="restaurant.name" class="restaurant-image">
-      <img v-if="restaurant.id == 1" src="../assets/burger2.jpg" :alt="restaurant.name" class="restaurant-image">
+      <img :src="`https://api.suvtekin.uz/${restaurant.image}`" :alt="restaurant.name" class="restaurant-image">
+      <!-- <img v-if="restaurant.id == 2" src="../assets/burger.webp" :alt="restaurant.name" class="restaurant-image"> -->
+      <!-- <img v-if="restaurant.id == 1" src="../assets/burger2.jpg" :alt="restaurant.name" class="restaurant-image"> -->
       <!-- <img src="../assets/placeholder.jpg" :alt="restaurant.name" class="restaurant-image"> -->
     </div>
     <div class="details">
@@ -15,7 +16,7 @@
         <span class="rating"> <font-awesome-icon :icon="['fas', 'star']" /> {{ restaurant.rating || '4.8' }}</span>
       </div>
       <div class="delivery-time"> <font-awesome-icon class="search-icon" :icon="['fas', 'car']" />
-        {{ restaurant.deliveryTime || '40-50 min' }}</div>
+        {{ restaurant.deliveryTime || '20-30 min' }}</div>
       <span class="bonus">Yetkazib berish tekin</span>
     </div>
   </div>

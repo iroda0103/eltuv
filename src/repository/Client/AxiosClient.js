@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // const baseDomain = "http://localhost:3002/";
-const baseDomain = "https://dastavka.onrender.com";
+const baseDomain = "https://api.suvtekin.uz/";
+// const baseDomain = "https://dastavka.onrender.com";
 const baseURL = `${baseDomain}`; 
 
 const Client = axios.create({

@@ -150,8 +150,9 @@ export default {
         </div>
         <div class="bottom-sheet__content">
           <div class="modal-image">
-            <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" />
-            <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" />
+            <img :src="`https://api.suvtekin.uz/${item.image}`" alt="Food item" />
+            <!-- <img v-if="item.id === 1" src="../assets/shefburger.jpg" alt="Food item" /> -->
+            <!-- <img v-if="item.id === 2" src="../assets/mixBurger.jpg" alt="Food item" /> -->
           </div>
           <!-- <div class="modal-info">
             <h2>{{ item.name }}</h2>

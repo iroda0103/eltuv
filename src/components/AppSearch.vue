@@ -24,7 +24,7 @@ export default {
     updateSearchQuery(event) {
       this.$emit('update:searchQuery', event.target.value);
     }
-  }
+  }   
 };
 </script>
 <style>

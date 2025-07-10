@@ -2,16 +2,8 @@
   <div class="checkout-container">
     <div class="header">
       <h2 class="title">Buyurtma turi</h2>
-      <!-- <div class="progress-steps">
-        <span class="step active">1. Savat</span>
-        <span class="divider">›</span>
-        <span class="step active">2. Yetkazish</span>
-        <span class="divider">›</span>
-        <span class="step">3. Tasdiqlash</span>
-      </div> -->
     </div>
 
-    <!-- Buyurtma turi -->
     <div class="section delivery-type">
       <h3 class="section-title">Buyurtma usuli</h3>
       <div class="options">
@@ -41,9 +33,12 @@
 
       <div class="address-card">
         <div class="address-main">
-          <i class="icon">📍</i>
+          <label>Manzil</label>
+          <!-- <i class="icon">📍</i> -->
           <!-- <p>{{ address.full }}</p> -->
-          <p>{{ userStore.user?.address }}</p>
+          <input v-model="userStore.user.address" type="text" placeholder="Masalan, uy orqasidagi eshikdan kiring"
+            class="form-input">
+          <!-- <p>{{ userStore.user?.address }}</p> -->
         </div>
 
         <!-- <div class="form-grid">
@@ -142,7 +137,7 @@ const address = ref({
 })
 
 
-const paymentMethod = ref('card')
+const paymentMethod = ref('cash')
 const deliveryPrice = ref(10000)
 const isDelivery = ref(true)
 const menuStore = useMenuStore()
@@ -168,50 +163,44 @@ console.log(orderStore);
 
 
 const order = async () => {
-  // Bu yerda buyurtma berish jarayonini amalga oshirish mumkin
-  // console.log('Buyurtma berildi:', {
-  //   address: address.value,
-  //   paymentMethod: paymentMethod.value,
-  //   totalPrice: menuStore.totalPrice + deliveryPrice.value,
-  //   items: menuStore.menu.map(item => ({
-  //     productId: item.id,
-  //     quantity: item.quantity
-  //   })),
-  //   deliveryFree: deliveryPrice.value
-  // })
-  // await orderStore.createOrderToDelivery({
-  //   address: userStore.user?.address,
-  //   driverId: 9,
-  //   clientId: userStore.user.id,
-  //   restaurantId: menuStore.restaurant?.id,
-  //   items: menuStore.menu.map(item => ({
-  //     menuId: item.id,
-  //     quantity: item.quantity
-  //   })),
-  // paymentMethod: paymentMethod.value,
-  // totalPrice: menuStore.totalPrice + deliveryPrice.value,
-  // deliveryFree: deliveryPrice.value
-  // })
-  window.Telegram.WebApp.sendData(JSON.stringify({
-    address: address.value,
-    paymentMethod: paymentMethod.value,
-    totalPrice: menuStore.totalPrice + deliveryPrice.value,
-    items: menuStore.menu.map(item => ({
-      productId: item.id,
-      quantity: item.quantity,
-      name: item.name,
-      price: item.price
-    })),
-    deliveryFree: deliveryPrice.value,
-    user: {
-      id: userStore.user.id,
-      name: userStore.user.name,
-      phone: userStore.user.phone,
-      address: userStore.user.address
-    }
-  }))
-  window.Telegram.WebApp.close() // Telegram WebApp ni yopish
-  // Redirect to order confirmation page or show success message
+  try {
+    const order = await orderStore.createOrder({
+      address: userStore.user?.address,
+      driverId: 9,
+      clientId: userStore.user.id,
+      restaurantId: menuStore.restaurant?.id,
+      items: menuStore.menu.map(item => ({
+        menuId: item.id,
+        quantity: item.quantity
+      })),
+      paymentMethod: paymentMethod.value,
+      deliveryMethod: isDelivery.value ? 'delivery' : 'pickup'
+    })
+    
+    window.Telegram.WebApp.sendData(JSON.stringify({
+      id: order.id,
+      address: address.value,
+      paymentMethod: paymentMethod.value,
+      totalPrice: menuStore.totalPrice + deliveryPrice.value,
+      items: menuStore.menu.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+        name: item.name,
+        price: item.price
+      })),
+      deliveryFree: deliveryPrice.value,
+      user: {
+        id: userStore.user.id,
+        name: userStore.user.name,
+        phone: userStore.user.phone,
+        address: userStore.user.address
+      }
+    }))
+  } catch (error) {
+    console.log('Nimadir xato ketdi', error)
+  }
+
+  window.Telegram.WebApp.close()
   console.log('Buyurtma muvaffaqiyatli yaratildi!')
 
 }
@@ -350,6 +339,7 @@ const order = async () => {
 .address-main {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 16px;
 }

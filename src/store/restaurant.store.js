@@ -17,8 +17,10 @@ export const useRestaurantStore = defineStore('restaurant', {
       this.loading = true
       try {
         const response = await RestaurantRepository.get()
+        const category_restaurant=await RestaurantRepository.getCategory()
         // this.restaurants = [{ id: 1, category: 'Burger', restaurants: response.data.data }]
         this.restaurants = response.data.data
+        this.categoryRestaurants=category_restaurant.data.data
       } catch (error) {
         this.error = error
       } finally {
@@ -92,6 +94,11 @@ export const useRestaurantStore = defineStore('restaurant', {
       } finally {
         this.loading = false
       }
+    }
+    ,
+    deleteStore(){
+      this.restaurants=[]
+      this.menu=[]
     }
   }
 })
