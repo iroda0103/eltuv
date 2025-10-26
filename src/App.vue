@@ -4,7 +4,7 @@
       <AppSearch @update:searchQuery="handleSearchChange" />
       <AppLocation @update:selectedLocation="handleLocationChange" :locations="locations" />
     </div> -->
-    <!-- <h1>{{ user?.first_name }},{{ user?.id }}{{ JSON.stringify(user) }}</h1> -->
+    <h1>{{ user?.first_name }},{{ user?.id }}{{ JSON.stringify(user) }}</h1>
 
     <main>
       <RouterView />
