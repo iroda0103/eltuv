@@ -286,7 +286,7 @@ const order = async () => {
     // Buyurtma yaratish
     const order = await orderStore.createOrder({
       address: userStore.user.address,
-      driverId: 3, // Bu hardcoded qiymat, o'zgartirish kerak
+      // driverId: 3, // Bu hardcoded qiymat, o'zgartirish kerak
       clientId: userStore.user.id,
       restaurantId: menuStore.restaurant?.id,
       items: menuStore.menu.map(item => ({
